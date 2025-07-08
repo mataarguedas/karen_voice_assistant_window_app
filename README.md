@@ -43,6 +43,8 @@ Prerequisites
 Installation
 
     The easy-peasy-sneaky-peaky-lemon-squeezy way, download karen.exe and run it.
+
+    Nevertheless, the hardy-farty-chili-spicy way:
     
     1. Clone the Repository
     git clone https://github.com/your-username/karen-voice-assistant.git
