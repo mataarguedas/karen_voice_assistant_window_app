@@ -42,6 +42,8 @@ Prerequisites
 
 Installation
 
+    The easy-peasy-sneaky-peaky-lemon-squeezy way, download karen.exe and run it.
+    
     1. Clone the Repository
     git clone https://github.com/your-username/karen-voice-assistant.git
     cd karen-voice-assistant
@@ -96,6 +98,7 @@ Installation
             self.PICOVOICE_ACCESS_KEY_ES = "YOUR_PICOVOICE_ACCESS_KEY"
 
 Usage
+    
     After completing the installation, you can launch the application by running the main script from your terminal:
     python karen_ui.py
 
@@ -112,8 +115,10 @@ Usage
       6. "Play video name on YouTube" or "Reproduce video name en YouTube" finds and plays the requested video on YouTube.
 
 License
+    
     This project is distributed under the MIT License. See the LICENSE.md file for more details.
     
 Acknowledgments
+    
     A big thank you to Picovoice for providing the accurate and efficient Porcupine wake word engine.
     This assistant uses the Google Speech Recognition API via the versatile SpeechRecognition library.
