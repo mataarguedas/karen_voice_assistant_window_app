@@ -95,7 +95,7 @@ Installation
             self.PICOVOICE_ACCESS_KEY_EN = "YOUR_PICOVOICE_ACCESS_KEY"
             self.PICOVOICE_ACCESS_KEY_ES = "YOUR_PICOVOICE_ACCESS_KEY"
 
-    Usage
+Usage
     After completing the installation, you can launch the application by running the main script from your terminal:
     python karen_ui.py
 
@@ -111,9 +111,9 @@ Installation
       5. "Search for ____________________" or "Busca ____________________" opens a new browser tab with Google search results.
       6. "Play video name on YouTube" or "Reproduce video name en YouTube" finds and plays the requested video on YouTube.
 
-    License
+License
     This project is distributed under the MIT License. See the LICENSE.md file for more details.
     
-    Acknowledgments
+Acknowledgments
     A big thank you to Picovoice for providing the accurate and efficient Porcupine wake word engine.
     This assistant uses the Google Speech Recognition API via the versatile SpeechRecognition library.
