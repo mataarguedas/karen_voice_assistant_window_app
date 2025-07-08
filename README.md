@@ -52,6 +52,7 @@ Installation
 
     2. Project Structure
     Ensure all the necessary asset files are placed in the root directory of the project alongside the script. The application depends on these files to function correctly.
+    
     /karen-voice-assistant
     ├── karen_ui.py               # Main application script
     ├── requirements.txt          # List of project dependencies
