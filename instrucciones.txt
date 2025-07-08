@@ -1,0 +1,48 @@
+Hola!
+Para usar a Karen, puede hacerlo en inglés o en español.
+
+Para usarla en inglés, debe decir "Hey Karen" bien Americano.
+Si quiere usarla en español, debe decir "Ey Karen" bien Latino. No Hey (Jey) sino 'Ey'.
+
+------------------------------------------------------------------------------------------------
+						En español:
+Después de decir: "Ey Karen"
+Va a aparecer:
+--- ¡Palabra de activación detectada! Escuchando tu comando... ---
+
+Para:
+	reproducir un video en youtube, diga: "reproduce _____ en youtube"
+
+		Si es una canción, mejor sólo decir el nombre de la canción, sin el artista.
+
+	buscar algo en google, diga: "busca _______."
+
+	preguntar la hora, diga: "Qué hora es"
+
+	preguntar la fecha, diga: "Qué día es hoy"
+
+	preguntar dónde estamos, diga: "Dónde estamos"
+
+	poner un temporizador, diga: "Pon un temporizador de ___ minutos"
+
+
+------------------------------------------------------------------------------------------------
+						En inglés:
+Después de decir: "Hey Karen"
+Va a aparecer:
+--- Wake word detected! Listening for your command... ---
+
+Para reproducir un video en youtube, diga: "play _____ on youtube"
+
+	Si es una canción, mejor sólo decir el nombre de la canción, sin el artista.
+
+Para: 
+	buscar algo en google, diga: "search for _______."
+
+	preguntar la hora, diga: "What time is it"
+
+	preguntar la fecha, diga: "What's the date"
+
+	preguntar dónde estamos, diga: "Where are we"
+
+	poner un temporizador, diga: "Set a timer for ___ minutes"
