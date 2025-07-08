@@ -1,0 +1,9 @@
+PyQt5
+pvporcupine
+pyaudio
+pyautogui
+pyttsx3
+pywhatkit
+SpeechRecognition
+geocoder
+Pillow
