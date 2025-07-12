@@ -6,7 +6,7 @@ import pyaudio
 import pyautogui
 import pyttsx3
 import pywhatkit
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QTextEdit
+from PyQt5.QtWidgets import (QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QTextEdit, QSystemTrayIcon, QMenu, QAction)
 from PyQt5.QtGui import QPixmap, QPainter, QBrush, QColor, QFont, QPainterPath, QIcon, QFontDatabase, QPen
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QObject
 import re
@@ -27,6 +27,7 @@ def resource_path(relative_path):
 class Backend(QObject):
     update_text = pyqtSignal(str)
     voice_activity = pyqtSignal(bool)
+    wake_word_detected = pyqtSignal()
 
     def __init__(self):
         super().__init__()
@@ -45,6 +46,7 @@ class Backend(QObject):
         
         self.WAKE_WORD_PATH_EN = resource_path("[insert your .ppn file name here]")
         self.WAKE_WORD_PATH_ES = resource_path("[insert your .ppn file name here]")
+
         self.MODEL_PATH_ES = resource_path("porcupine_params_es.pv")
 
         self.update_text.emit(f"English wake word path: {self.WAKE_WORD_PATH_EN}")
@@ -195,6 +197,7 @@ class Backend(QObject):
                         elif keyword_index_es >= 0:
                             lang_choice = 'es'
                         if lang_choice:
+                            self.wake_word_detected.emit()
                             try:
                                 audio_stream.stop_stream()
                                 audio_stream.close()
@@ -279,7 +282,7 @@ class CircleWidget(QWidget):
         x = (self.width() - scaled_pixmap.width()) / 2
         y = (self.height() - scaled_pixmap.height()) / 2
 
-        painter.drawPixmap(self.rect(), self.pixmap)
+        painter.drawPixmap(int(x), int(y), scaled_pixmap)
 
         if self.active:
             pen_width = 4
@@ -297,6 +300,22 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Karen")
         self.setFixedSize(300, 600)
         self.setWindowIcon(QIcon(resource_path("karenCirclePic.png")))
+
+        self.tray_icon = QSystemTrayIcon(self)
+        self.tray_icon.setIcon(self.windowIcon())
+        self.tray_icon.setToolTip("Karen is running")
+
+        tray_menu = QMenu()
+        show_action = tray_menu.addAction("Show")
+        show_action.triggered.connect(self.show)
+
+        quit_action = tray_menu.addAction("Exit")
+        quit_action.triggered.connect(self.quit_app)
+
+        self.tray_icon.setContextMenu(tray_menu)
+        self.tray_icon.show()
+
+        self.tray_icon.activated.connect(self.restore_window)
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -402,6 +421,7 @@ class MainWindow(QMainWindow):
         self.backend = Backend()
         self.backend.update_text.connect(self.update_console_from_backend)
         self.backend.voice_activity.connect(self.voice_indicator.set_active)
+        self.backend.wake_word_detected.connect(self.show_window)
         def backend_thread_wrapper():
             try:
                 self.backend.run()
@@ -412,13 +432,33 @@ class MainWindow(QMainWindow):
         self.backend_thread.daemon = True
         self.backend_thread.start()
 
+    def show_window(self):
+        self.show()
+        self.raise_()
+        self.activateWindow()
+
     def update_console_from_backend(self, text):
         self.console_output.append(text)
         
-    def closeEvent(self, event):
+    def restore_window(self, reason):
+        if reason == QSystemTrayIcon.DoubleClick:
+            self.show()
+
+    def quit_app(self):
         if hasattr(self, 'backend'):
             self.backend.stop()
-        event.accept()
+        self.tray_icon.hide()
+        QApplication.instance().quit()
+
+    def closeEvent(self, event):
+        event.ignore()
+        self.hide()
+        self.tray_icon.showMessage(
+            "Karen",
+            "Application was minimized to tray.",
+            QSystemTrayIcon.Information,
+            2000
+        )
 
 if __name__ == "__main__":
     if not os.path.exists(resource_path("voice_indicator.png")):
