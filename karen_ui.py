@@ -92,8 +92,8 @@ class Backend(QObject):
             with sr.Microphone() as source:
                 self.update_text.emit(self.MESSAGES[lang_choice]["listening"])
                 self.voice_activity.emit(True)
-                r.adjust_for_ambient_noise(source, duration=0.5)  # Reduced duration
-                audio = r.listen(source, timeout=5, phrase_time_limit=5)  # Added timeouts
+                r.adjust_for_ambient_noise(source, duration=0.5)
+                audio = r.listen(source, timeout=5, phrase_time_limit=5)
                 self.voice_activity.emit(False)
             
             command = r.recognize_google(audio, language=language_code).lower()
@@ -255,9 +255,6 @@ class Backend(QObject):
             self.update_text.emit(f"A critical error occurred: {e}")
 
 class CircleWidget(QWidget):
-    """
-    A circular widget that can change color.
-    """
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setFixedSize(150, 150)
@@ -286,7 +283,7 @@ class CircleWidget(QWidget):
 
         if self.active:
             pen_width = 4
-            painter.setPen(QPen(QColor(0, 150, 255, 180), pen_width)) # Semi-transparent blue
+            painter.setPen(QPen(QColor(0, 150, 255, 180), pen_width))
             painter.drawEllipse(
                 int(pen_width / 2),
                 int(pen_width / 2),
@@ -382,7 +379,7 @@ class MainWindow(QMainWindow):
     def start_listening_animation(self):
         self.listening_timer = QTimer(self)
         self.listening_timer.timeout.connect(self.update_listening_text)
-        self.listening_timer.start(20) # A bit faster for this message
+        self.listening_timer.start(20)
 
     def update_listening_text(self):
         if self.listening_char_index < len(self.listening_full_text):
@@ -391,7 +388,7 @@ class MainWindow(QMainWindow):
             self.listening_char_index += 1
         else:
             self.listening_timer.stop()
-            self.start_backend() # Finally, start the backend logic
+            self.start_backend()
 
     def write(self, text):
         self.console_output.moveCursor(self.console_output.textCursor().End)
@@ -424,7 +421,6 @@ class MainWindow(QMainWindow):
         event.accept()
 
 if __name__ == "__main__":
-    # Create a placeholder image if it doesn't exist
     if not os.path.exists(resource_path("voice_indicator.png")):
         from PIL import Image, ImageDraw
         img = Image.new('RGB', (150, 150), color = 'lightgray')
@@ -437,7 +433,7 @@ if __name__ == "__main__":
     def excepthook(type, value, tb):
         err = ''.join(traceback.format_exception(type, value, tb))
         print(f"[UNHANDLED EXCEPTION]\n{err}")
-        # Try to show in the UI if possible
+        
         try:
             if hasattr(window, 'update_console_from_backend'):
                 window.update_console_from_backend(f"[UNHANDLED EXCEPTION]\n{err}")
